@@ -9,10 +9,10 @@ terraform {
 
 # Configure the AWS Provider
 provider "aws" {
-  region     = "ap-south-1"
+  region     = "us-east-1"
 }
 resource "aws_key_pair" "example" {
-  key_name = "key02"
+  key_name = "fin01"
   public_key = file("~/.ssh/id_ed25519.pub")
 }
 
@@ -35,9 +35,9 @@ resource "aws_security_group" "allow_all" {
 }
 
 resource "aws_instance" "server" {
-  ami           = "ami-0522ab6e1ddcc7055"
+  ami           = "ami-0e86e20dae9224db8"
   instance_type = var.instance_type
-  key_name = "key02"
+  key_name = "fin01"
   vpc_security_group_ids = [aws_security_group.allow_all.id]
 
   tags = {

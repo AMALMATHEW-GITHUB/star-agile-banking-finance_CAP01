@@ -1,13 +1,13 @@
 pipeline {
     agent any
     environment {
-        AWS_ACCESS_KEY_ID = credentials('aws-access-key-id')
-        AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
+        AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY')
+        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_KEY')
     }
     stages{
         stage('build project'){
             steps{
-                git 'https://github.com/lax66/star-agile-banking-finance_CAP01.git'
+                git 'https://github.com/AMALMATHEW-GITHUB/star-agile-banking-finance_CAP01.git'
                 sh 'mvn clean package'
               
             }
@@ -15,16 +15,16 @@ pipeline {
         stage('Building  docker image'){
             steps{
                 script{
-                    sh 'docker build -t laxg66/capstone01:v1 .'
+                    sh 'docker build -t amal321/finance01:v1 .'
                     sh 'docker images'
                 }
             }
         }
         stage('push to docker-hub'){
             steps{
-                withCredentials([usernamePassword(credentialsId: 'docker-creds', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                withCredentials([usernamePassword(credentialsId: 'DOCKER_CREDS', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                     sh "echo $PASS | docker login -u $USER --password-stdin"
-                    sh 'docker push laxg66/capstone01:v1'
+                    sh 'docker push amal321/finance01:v1'
                 }
             }
         }
@@ -55,7 +55,7 @@ pipeline {
                 if terraform state show aws_key_pair.example 2>/dev/null; then
                     echo "Key pair already exists in the prod workspace"
                 else
-                    terraform import aws_key_pair.example key02 || echo "Key pair already imported"
+                    terraform import aws_key_pair.example fin01 || echo "Key pair already imported"
                 fi
                 terraform destroy -auto-approve
                 terraform apply -auto-approve

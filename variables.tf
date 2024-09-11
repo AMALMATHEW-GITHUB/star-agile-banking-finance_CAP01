@@ -20,4 +20,4 @@ variable "ssh_private_key" {
 }
 variable "ssh_public_key" {
   type    = string
-  default = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGOLDsXzDIZ19Vlagmp+D43VS4uxLSkSYG4yZ3C0XYLu"
+  default = "/var/lib/jenkins/.ssh/id_ed25519.pub"
